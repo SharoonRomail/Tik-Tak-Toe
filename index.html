@@ -1,0 +1,252 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Tick Tack Toe</title>
+<style type="text/css">
+body{
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:14px;
+}
+.cont {
+	height: 630px;
+	width: 610px;
+	border: thin solid #09F;
+	position: relative;
+	padding:15px;
+}
+.box{
+	height: 200px;
+	width: 200px;
+	float:left;
+	font-size: 160px;
+    text-align: center;
+	color: #4c1a12;
+    text-shadow: 8px 6px #e0e0e0;
+	cursor: pointer;
+	user-select: none;
+}
+#msg{
+	width:100%;
+	clear:both;
+	text-align: center;
+	font-size: 18px;
+	color: #F00;
+}
+.instruction{
+	font-size: 18px;
+	text-align: center;
+}
+.instruction img{
+	width: 25px;
+}
+.frame {
+    border: 3px solid #4c1a12;
+    background: url(images/board.jpg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin: auto;
+    padding: 10px 20px;
+}
+.reset{
+	text-align: center;
+}
+input.reset {
+	font-size: 32px;
+    color: #4c1a12;
+    padding: 10px;
+    width: 250px;
+    margin: 10px 0px 0px 0px;
+    background: url(images/wood.jpg);
+	border-radius: 10px;
+    background-size: cover;
+	cursor: pointer;
+}
+.blink{
+	animation: blink-animation 1s steps(5, start) infinite;
+}
+@keyframes blink-animation {
+	to {
+		visibility: hidden;
+	}
+}
+@-webkit-keyframes blink-animation {
+	to {
+		visibility: hidden;
+	}
+}
+	
+</style>
+</head>
+<body>
+<p class="instruction">
+	<div id="msg" class="blink">&nbsp;</div>
+</p>
+<div class="cont frame">
+	<div id="box1" class="box"></div>
+	<div id="box2" class="box"></div>
+	<div id="box3" class="box"></div>
+
+	<div id="box4" class="box"></div>
+	<div id="box5" class="box"></div>
+	<div id="box6" class="box"></div>
+
+	<div id="box7" class="box"></div>
+	<div id="box8" class="box"></div>
+	<div id="box9" class="box"></div>  
+</div>
+<div class="reset">
+	<input class="reset" type="button" onClick="ResetAll()" value="Reset" />	
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script language="javascript" type="text/javascript">
+var Winner = 0;
+var UserClick = 0;
+$( ".box" ).mousedown(function() {	
+	if ( Winner == 0 ){
+		var ply = (UserClick % 2);
+		console.log( UserClick + "|" + ply );
+		
+		if ( $(this).html() == "" ){
+			if ( ply == 0 ){
+				$(this).html( "0" );
+				UserClick++;				
+			}else{
+				$(this).html( "X" );
+				UserClick++;	
+			}
+		}
+		CheckCombinations();
+	}
+});
+
+$(document).ready(function() {
+    $(".box").on("contextmenu",function(){
+       return false;
+    });	
+});
+
+function CheckCombinations(){
+	
+	console.log ( "Checking Combos" );
+	
+	var box1val = $('#box1').text();
+	var box2val = $('#box2').text();
+	var box3val = $('#box3').text();
+ 
+	var box4val = $('#box4').text();
+	var box5val = $('#box5').text();
+	var box6val = $('#box6').text();
+	
+	var box7val = $('#box7').text();
+	var box8val = $('#box8').text();
+	var box9val = $('#box9').text();
+	
+	var WinnerAlert = '';
+	
+	// Row 1	
+	if ( box1val == "O" ){
+		if ( box1val == "O" && box2val == "O" && box3val == "O" ){
+			WinnerAlert = "P1 is the Winner!" ;
+		}
+	}else if ( box1val == "X" ){
+		if ( box1val == "X" && box2val == "X" && box3val == "X" ){
+			WinnerAlert = "P2 is the Winner!";
+		}
+	}
+	
+	// Row 2
+	if ( box4val == "O" ){
+		if ( box4val == "O" && box5val == "O" && box6val == "O" ){
+			WinnerAlert = "P1 is the Winner!" ;
+		}
+	}else if ( box4val == "X" ){
+		if ( box4val == "X" && box5val == "X" && box6val == "X" ){
+			WinnerAlert =  "P2 is the Winner!" ;
+		}
+	}
+	
+	// Row 3
+	if ( box7val == "O" ){
+		if ( box7val == "O" && box8val == "O" && box9val == "O" ){
+			WinnerAlert = "P1 is the Winner!" ;
+		}
+	}else if ( box7val == "X" ){
+		if ( box7val == "X" && box8val == "X" && box9val == "X" ){
+			WinnerAlert = "P2 is the Winner!" ;
+		}
+	}
+	
+	// Col 1	
+	if ( box1val == "O" ){
+		if ( box1val == "O" && box4val == "O" && box7val == "O" ){
+			WinnerAlert =  "P1 is the Winner!" ;
+		}
+	}else if ( box1val == "X" ){
+		if ( box1val == "X" && box4val == "X" && box7val == "X" ){
+			WinnerAlert = "P2 is the Winner!" ;
+		}
+	}
+	
+	// Col 2	
+	if ( box2val == "O" ){
+		if ( box2val == "O" && box5val == "O" && box8val == "O" ){
+			WinnerAlert =  "P1 is the Winner!" ;
+		}
+	}else if ( box2val == "X" ){
+		if ( box2val == "X" && box5val == "X" && box8val == "X" ){
+			WinnerAlert =  "P2 is the Winner!" ;
+		}
+	}
+	
+	// Col 3
+	if ( box3val == "O" ){
+		if ( box3val == "O" && box6val == "O" && box9val == "O" ){
+			WinnerAlert = "P1 is the Winner!" ;
+		}
+	}else if ( box3val == "X" ){
+		if ( box3val == "X" && box6val == "X" && box9val == "X" ){
+			WinnerAlert = "P2 is the Winner!";
+		}
+	}
+		
+	// Diagnol 1
+	if ( box1val == "O" ){
+		if ( box1val == "O" && box5val == "O" && box9val == "O" ){
+			WinnerAlert = "P1 is the Winner!" ;
+		}
+	}else if ( box1val == "X" ){
+		if ( box1val == "X" && box5val == "X" && box9val == "X" ){
+			WinnerAlert = "P2 is the Winner!";
+		}
+	}
+	
+	// Diagnol 2
+	if ( box3val == "O" ){
+		if ( box3val == "O" && box5val == "O" && box7val == "O" ){
+			WinnerAlert = "P1 is the Winner!" ;
+		}
+	}else if ( box3val == "X" ){
+		if ( box3val == "X" && box5val == "X" && box7val == "X" ){
+			WinnerAlert = "P2 is the Winner!";
+		}
+	}
+	
+	if ( WinnerAlert != "" ){
+		$("#msg").html( WinnerAlert );
+		Winner = 1;
+		//ResetAll();
+	}
+}
+
+function ResetAll(){
+	let a =1;
+	for(let a=1;a<=9;a++){
+		$('#box'+a).html('');
+	}
+	Winner = 0;
+	$("#msg").html("&nbsp;");
+}
+</script>
+</body>
+</html>
